@@ -277,7 +277,7 @@ function SkillRecommendations({ onLearnSkill, onSeeAll }) {
 }
 
 // Section: Personalized Job Feed
-function PersonalizedJobFeed() {
+function PersonalizedJobFeed({ onViewJob, onApplyJob, onTrackApplication, onSeeAll }) {
   const jobs = [
     {
       title: 'UI Developer',
@@ -307,21 +307,28 @@ function PersonalizedJobFeed() {
             <div className="jmp-card-tags">
               {job.tags.map(t => (<span className="jmp-tag" key={t}>{t}</span>))}
             </div>
+            <button
+              className="jmp-cta-tertiary"
+              style={{alignSelf: "flex-start"}}
+              onClick={() => onViewJob(job)}
+            >
+              View Job
+            </button>
             {!job.applied ? (
-              <button className="jmp-cta-primary">Apply</button>
+              <button className="jmp-cta-primary" onClick={() => onApplyJob(job)}>Apply</button>
             ) : (
-              <button className="jmp-cta-secondary" disabled>Track Application</button>
+              <button className="jmp-cta-secondary" onClick={() => onTrackApplication({ ...job, status: 'In Review'})}>Track Application</button>
             )}
           </div>
         ))}
       </div>
-      <button className="jmp-cta-tertiary">Explore More Jobs</button>
+      <button className="jmp-cta-tertiary" onClick={onSeeAll}>Explore More Jobs</button>
     </div>
   );
 }
 
 // Section: Application Tracker
-function ApplicationTracker() {
+function ApplicationTracker({ onViewApplication, onExport }) {
   const applications = [
     {
       title: 'Front-End Developer',
@@ -361,13 +368,13 @@ function ApplicationTracker() {
                 </span>
               </td>
               <td>
-                <button className="jmp-cta-secondary">View</button>
+                <button className="jmp-cta-secondary" onClick={() => onViewApplication(a)}>View</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button className="jmp-cta-tertiary">Export Applications</button>
+      <button className="jmp-cta-tertiary" onClick={onExport}>Export Applications</button>
     </div>
   );
 }
