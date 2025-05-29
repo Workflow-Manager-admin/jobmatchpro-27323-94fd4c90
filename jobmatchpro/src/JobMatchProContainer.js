@@ -1,6 +1,25 @@
 import React, { useState } from 'react';
 import './JobMatchProContainer.css';
 
+/**
+ * Simple Modal overlay component for interactive dashboard dialogs
+ * Props: open (boolean), title (string), children (node), onClose (fn)
+ */
+function JMPModal({ open, title, onClose, children }) {
+  if (!open) return null;
+  return (
+    <div className="jmp-modal-overlay" role="dialog" aria-modal="true">
+      <div className="jmp-modal-panel" tabIndex={-1}>
+        <header className="jmp-modal-header">
+          <span className="jmp-modal-title">{title}</span>
+          <button className="jmp-modal-close" onClick={onClose} aria-label="Close Dialog">&times;</button>
+        </header>
+        <div className="jmp-modal-content">{children}</div>
+      </div>
+    </div>
+  );
+}
+
 // Sidebar navigation items
 const NAV_ITEMS = [
   { key: 'profile', label: 'Profile' },
