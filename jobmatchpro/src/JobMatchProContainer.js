@@ -252,7 +252,7 @@ function ProfileMatching({ onViewJob, onSeeAll }) {
 }
 
 // Section: Skill Recommendations
-function SkillRecommendations() {
+function SkillRecommendations({ onLearnSkill, onSeeAll }) {
   const recommendedSkills = [
     { name: "TypeScript", reason: "Matches 42% more jobs" },
     { name: "AWS", reason: "Cloud roles preference" },
@@ -267,11 +267,11 @@ function SkillRecommendations() {
           <li key={skill.name} className="jmp-skill-list-item">
             <span className="jmp-tag skill">{skill.name}</span>
             <span className="jmp-skill-reason">{skill.reason}</span>
-            <button className="jmp-cta-secondary">Learn</button>
+            <button className="jmp-cta-secondary" onClick={() => onLearnSkill(skill)}>Learn</button>
           </li>
         ))}
       </ul>
-      <button className="jmp-cta-tertiary">See All Recommendations</button>
+      <button className="jmp-cta-tertiary" onClick={onSeeAll}>See All Recommendations</button>
     </div>
   );
 }
