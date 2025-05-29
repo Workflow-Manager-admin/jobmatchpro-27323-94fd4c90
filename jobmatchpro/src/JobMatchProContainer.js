@@ -29,26 +29,124 @@ const NAV_ITEMS = [
 ];
 
 // Dashboard Main Container for JobMatchPro
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * Main container for JobMatchPro, includes overlay/modal state and handlers for all dashboard actions.
+ */
 function JobMatchProContainer() {
   // Sidebar state
   const [selected, setSelected] = useState('jobs'); // Default landing
 
-  // Render main content based on selected sidebar item
+  // Universal modal state: action, payload for the modal/panel dialog
+  const [modal, setModal] = useState({
+    open: false,
+    type: null,
+    payload: null
+  });
+
+  // Handler: Open modal for a given type/payload
+  function handleShowModal(type, payload) {
+    setModal({ open: true, type, payload });
+  }
+  // Handler: Hide modal
+  function handleHideModal() {
+    setModal({ open: false, type: null, payload: null });
+  }
+
+  // Section-specific action handler mappings
+  const modalHandlers = {
+    viewJob: (job) => handleShowModal('viewJob', job),
+    applyJob: (job) => handleShowModal('applyJob', job),
+    trackApplication: (app) => handleShowModal('trackApp', app),
+    viewApplication: (app) => handleShowModal('viewApplication', app),
+    learnSkill: (skill) => handleShowModal('learnSkill', skill),
+    seeAll: (section) => handleShowModal('seeAll', { section }),
+    exportApplications: () => handleShowModal('export', null),
+  };
+
+  // Render main content, passing handlers
   const renderMain = () => {
     switch (selected) {
       case 'profile':
-        return <ProfileMatching />;
+        return <ProfileMatching onViewJob={modalHandlers.viewJob} onSeeAll={() => modalHandlers.seeAll('profile')} />;
       case 'jobs':
-        return <PersonalizedJobFeed />;
+        return <PersonalizedJobFeed 
+            onViewJob={modalHandlers.viewJob} 
+            onApplyJob={modalHandlers.applyJob} 
+            onTrackApplication={modalHandlers.trackApplication}
+            onSeeAll={() => modalHandlers.seeAll('jobs')}
+        />;
       case 'skills':
-        return <SkillRecommendations />;
+        return <SkillRecommendations 
+            onLearnSkill={modalHandlers.learnSkill}
+            onSeeAll={() => modalHandlers.seeAll('skills')}
+        />;
       case 'tracker':
-        return <ApplicationTracker />;
+        return <ApplicationTracker onViewApplication={modalHandlers.viewApplication} onExport={modalHandlers.exportApplications} />;
       default:
         return null;
     }
   };
+
+  // Render overlay modal content (maps modal.type to content)
+  function renderModalContent() {
+    switch (modal.type) {
+      case 'viewJob':
+        return (
+          <>
+            <h3>{modal.payload.title}</h3>
+            <div><b>Company:</b> {modal.payload.company}</div>
+            <div>
+              <b>Tags:</b>{' '}
+              {modal.payload.tags?.map((t) => <span className="jmp-tag" key={t}>{t}</span>)}
+            </div>
+            <div style={{marginTop: 10, color: "#777"}}>Job description preview... (static demo)</div>
+          </>
+        );
+      case 'applyJob':
+        return (
+          <>
+            <h3>Apply to {modal.payload.title}</h3>
+            <div>Company: <b>{modal.payload.company}</b></div>
+            <div style={{margin: "12px 0 0 0"}}>Successfully applied! (demo)</div>
+          </>
+        );
+      case 'trackApp':
+      case 'viewApplication':
+        return (
+          <>
+            <h3>Application for {modal.payload.title}</h3>
+            <div>Company: {modal.payload.company}</div>
+            <div>Status: <span className={`jmp-status-badge ${modal.payload.status?.toLowerCase()}`}>{modal.payload.status || "In Progress"}</span></div>
+            <div style={{marginTop: 10, color: "#777"}}>Status details/notes... (static demo)</div>
+          </>
+        );
+      case 'learnSkill':
+        return (
+          <>
+            <h3>Learn {modal.payload.name}</h3>
+            <div>{modal.payload.reason}</div>
+            <div style={{marginTop:10}}>Learning resources (demo): <a href="https://www.google.com/search?q=learn+{modal.payload.name}" target="_blank" rel="noopener noreferrer">{modal.payload.name} tutorials</a></div>
+          </>
+        );
+      case 'seeAll':
+        return (
+          <>
+            <h3>All in {modal.payload.section === "profile" ? "Profile Matches" : modal.payload.section.charAt(0).toUpperCase() + modal.payload.section.slice(1)}</h3>
+            <div style={{marginTop: 10}}>Here you'd see the full list for "{modal.payload.section}". (Demo panel)</div>
+          </>
+        );
+      case 'export':
+        return (
+          <>
+            <h3>Export Applications</h3>
+            <div style={{marginTop: 15}}>Exported! (Demo feedback)</div>
+          </>
+        );
+      default:
+        return null;
+    }
+  }
 
   return (
     <div className="jmp-dashboard-root">
@@ -81,13 +179,44 @@ function JobMatchProContainer() {
         </header>
         <section className="jmp-main-content">{renderMain()}</section>
       </main>
+      <JMPModal open={modal.open} title={modalTitle(modal)} onClose={handleHideModal}>
+        {renderModalContent()}
+      </JMPModal>
     </div>
   );
+
+  // Helper: Modal dynamic title
+  function modalTitle(modal) {
+    switch (modal.type) {
+      case 'viewJob': return 'Job Details';
+      case 'applyJob': return 'Apply';
+      case 'trackApp': return 'Track Application';
+      case 'viewApplication': return 'Application Details';
+      case 'learnSkill': return 'Skill Resource';
+      case 'seeAll': return 'Full List';
+      case 'export': return 'Export';
+      default: return '';
+    }
+  }
 }
 
 // Section: Profile Matching
-function ProfileMatching() {
-  // Placeholder for profile data and matched jobs
+function ProfileMatching({ onViewJob, onSeeAll }) {
+  // Demo jobs
+  const matches = [
+    {
+      title: "Product Designer",
+      company: "Acme Corp",
+      tags: ["UI/UX", "Figma", "Sketch"],
+      match: "85%"
+    },
+    {
+      title: "Front-End Developer",
+      company: "BetaSoft",
+      tags: ["React", "JS", "CSS"],
+      match: "80%"
+    }
+  ];
   return (
     <div className="jmp-section">
       <h2 className="jmp-section-title">Welcome, Jane Doe!</h2>
@@ -95,48 +224,29 @@ function ProfileMatching() {
         Your profile matches <span className="jmp-stat-highlight">27</span> new job opportunities.
       </p>
       <div className="jmp-cards-list">
-        <div className="jmp-card match">
-          <h3>Product Designer</h3>
-          <div className="jmp-card-details">
-            <span>Acme Corp</span>
-            <span className="jmp-match-score">Match: 85%</span>
+        {matches.map((job) => (
+          <div className="jmp-card match" key={job.title + job.company}>
+            <h3>{job.title}</h3>
+            <div className="jmp-card-details">
+              <span>{job.company}</span>
+              <span className="jmp-match-score">Match: {job.match}</span>
+            </div>
+            <div className="jmp-card-tags">
+              {job.tags.map((t) => <span className="jmp-tag" key={t}>{t}</span>)}
+            </div>
+            <button
+              className="jmp-cta-primary"
+              aria-label={`View Job: ${job.title} at ${job.company}`}
+              tabIndex="0"
+              type="button"
+              onClick={() => onViewJob(job)}
+            >
+              View Job
+            </button>
           </div>
-          <div className="jmp-card-tags">
-            <span className="jmp-tag">UI/UX</span>
-            <span className="jmp-tag">Figma</span>
-            <span className="jmp-tag">Sketch</span>
-          </div>
-          <button
-            className="jmp-cta-primary"
-            aria-label="View Job: Product Designer at Acme Corp"
-            tabIndex="0"
-            type="button"
-          >
-            View Job
-          </button>
-        </div>
-        <div className="jmp-card match">
-          <h3>Front-End Developer</h3>
-          <div className="jmp-card-details">
-            <span>BetaSoft</span>
-            <span className="jmp-match-score">Match: 80%</span>
-          </div>
-          <div className="jmp-card-tags">
-            <span className="jmp-tag">React</span>
-            <span className="jmp-tag">JS</span>
-            <span className="jmp-tag">CSS</span>
-          </div>
-          <button
-            className="jmp-cta-primary"
-            aria-label="View Job: Front-End Developer at BetaSoft"
-            tabIndex="0"
-            type="button"
-          >
-            View Job
-          </button>
-        </div>
+        ))}
       </div>
-      <button className="jmp-cta-tertiary">See All Matching Jobs</button>
+      <button className="jmp-cta-tertiary" onClick={onSeeAll}>See All Matching Jobs</button>
     </div>
   );
 }
