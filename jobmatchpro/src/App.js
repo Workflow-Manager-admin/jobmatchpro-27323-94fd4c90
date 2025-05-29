@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import './dashboard.css';
 
 // Sidebar navigation options
 const NAV_OPTIONS = [
