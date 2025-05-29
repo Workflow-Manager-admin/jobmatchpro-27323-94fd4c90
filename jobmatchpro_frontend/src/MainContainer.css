@@ -1,0 +1,349 @@
+:root {
+  --jmp-primary: #2D6A4F;
+  --jmp-secondary: #40916C;
+  --jmp-accent: #F9C74F;
+  --jmp-bg: #f9fafb;
+  --jmp-bg-sidebar: #fff;
+  --jmp-border: #e0e3e7;
+  --jmp-shadow: 0 1px 2px rgba(60, 60, 80, 0.04);
+  --jmp-text: #19323c;
+  --jmp-text-secondary: #60717C;
+  --jmp-radius: 12px;
+}
+
+.jmp-dashboard-root {
+  display: flex;
+  min-height: 100vh;
+  background: var(--jmp-bg);
+  color: var(--jmp-text);
+  font-family: "Inter", "Roboto", "Arial", sans-serif;
+}
+
+.jmp-sidebar {
+  width: 230px;
+  min-width: 200px;
+  background: var(--jmp-bg-sidebar);
+  border-right: 1px solid var(--jmp-border);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-shadow: var(--jmp-shadow);
+  padding: 32px 16px 16px 16px;
+}
+
+.jmp-sidebar-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: var(--jmp-primary);
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+.jmp-logo-accent {
+  color: var(--jmp-accent);
+  margin-right: 4px;
+  font-weight: 800;
+}
+
+.jmp-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jmp-nav-item {
+  border: none;
+  background: none;
+  color: var(--jmp-text-secondary);
+  font-weight: 500;
+  font-size: 1.08rem;
+  padding: 10px 16px;
+  border-radius: var(--jmp-radius);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+
+.jmp-nav-item.active,
+.jmp-nav-item:hover {
+  background: var(--jmp-primary);
+  color: #fff;
+}
+
+.jmp-main {
+  flex: 1;
+  min-height: 100vh;
+  background: var(--jmp-bg);
+  padding: 0 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.jmp-main-header {
+  padding: 32px 40px 8px 40px;
+  background: var(--jmp-bg);
+  border-bottom: 1px solid var(--jmp-border);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.jmp-welcome {
+  font-size: 1.1rem;
+  color: var(--jmp-text-secondary);
+  font-weight: 400;
+}
+.jmp-user {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--jmp-primary);
+}
+
+.jmp-main-sections {
+  flex: 1;
+  padding: 32px 40px 16px 40px;
+}
+
+.jmp-section {
+  background: #fff;
+  border-radius: var(--jmp-radius);
+  box-shadow: var(--jmp-shadow);
+  padding: 30px 28px;
+  margin-bottom: 24px;
+}
+
+.jmp-section h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.45rem;
+  color: var(--jmp-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.jmp-section-accent {
+  font-size: 1.1rem;
+  margin-left: 3px;
+}
+
+.jmp-job-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.jmp-job-card {
+  flex: 1 1 230px;
+  min-width: 220px;
+  max-width: 260px;
+  background: var(--jmp-bg);
+  border-radius: var(--jmp-radius);
+  border: 1px solid var(--jmp-border);
+  box-shadow: 0 0.5px 2px rgba(80,90,120,0.05);
+  padding: 20px 18px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+  transition: box-shadow 0.13s;
+  position: relative;
+}
+
+.jmp-job-card.applied {
+  opacity: 0.72;
+  box-shadow: none !important;
+  border: 1.5px dashed var(--jmp-secondary);
+}
+
+.jmp-job-title {
+  font-weight: 600;
+  font-size: 1.18rem;
+  color: var(--jmp-primary);
+}
+
+.jmp-job-meta {
+  font-size: 0.98rem;
+  color: var(--jmp-text-secondary);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.jmp-job-tags {
+  margin: 0 0 8px 0;
+}
+.jmp-job-tag {
+  background: var(--jmp-secondary);
+  color: #fff;
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 0.86rem;
+  padding: 2px 10px;
+  margin-right: 6px;
+  margin-bottom: 3px;
+  vertical-align: middle;
+}
+
+.jmp-cta {
+  background: var(--jmp-primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 8px 0;
+  margin-top: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+.jmp-cta:hover:not(.disabled) {
+  background: #43936c;
+}
+
+.jmp-cta.disabled {
+  opacity: 0.62;
+  background: var(--jmp-secondary);
+  cursor: not-allowed;
+}
+.jmp-cta-secondary {
+  background: var(--jmp-accent);
+  color: #19323c;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.98rem;
+  padding: 7px 0;
+  margin-top: 8px;
+  font-weight: 500;
+  width: 100%;
+  transition: background 0.13s;
+  cursor: pointer;
+}
+.jmp-cta-secondary:hover {
+  background: #ffe486;
+}
+
+.jmp-skill-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.jmp-skill-card {
+  background: var(--jmp-bg);
+  border-radius: var(--jmp-radius);
+  border: 1px solid var(--jmp-border);
+  box-shadow: 0 0.5px 2px rgba(80,90,120,0.05);
+  padding: 16px 16px 13px 16px;
+  flex: 1 1 185px;
+  min-width: 185px;
+  max-width: 210px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.jmp-skill-name {
+  font-weight: 600;
+  color: var(--jmp-secondary);
+}
+.jmp-skill-reason {
+  font-size: 0.96rem;
+  color: var(--jmp-text-secondary);
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+
+.jmp-tracker-table-wrapper {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.jmp-tracker-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 335px;
+  background: var(--jmp-bg);
+  border-radius: var(--jmp-radius);
+  overflow: hidden;
+  box-shadow: 0 0.5px 1.5px rgba(110,120,140,0.06);
+}
+.jmp-tracker-table th,
+.jmp-tracker-table td {
+  text-align: left;
+  padding: 9px 13px;
+  border-bottom: 1px solid var(--jmp-border);
+  font-size: 1rem;
+}
+.jmp-tracker-table th {
+  color: var(--jmp-primary);
+  font-weight: 600;
+  background: #f5f8f6;
+}
+
+.jmp-status-badge {
+  padding: 3px 9px;
+  border-radius: 9px;
+  font-size: 0.93rem;
+  font-weight: 500;
+}
+
+.jmp-status-applied {
+  background: var(--jmp-secondary);
+  color: #fff;
+}
+.jmp-status-interviewing {
+  background: var(--jmp-accent);
+  color: #2d4923;
+}
+.jmp-status-rejected {
+  background: #f05a4e;
+  color: #fff;
+}
+.jmp-status-offer {
+  background: #8ad271;
+  color: #192c10;
+}
+
+.jmp-profile-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.jmp-profile-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  border: 2.5px solid var(--jmp-primary);
+  margin-right: 4px;
+}
+
+.jmp-profile-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.jmp-profile-role {
+  color: var(--jmp-secondary);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.jmp-profile-skills-label {
+  color: var(--jmp-text-secondary);
+  font-size: 0.9rem;
+  margin-top: 7px;
+}
+.jmp-profile-skills {
+  font-size: 1rem;
+  color: var(--jmp-primary);
+  margin-top: 2px;
+}
+.jmp-profile-actions {
+  margin-top: 3px;
+}
