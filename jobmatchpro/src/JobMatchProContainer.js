@@ -109,7 +109,7 @@ function ProfileMatching() {
           </div>
           <button
             className="jmp-cta-primary"
-            aria-label="View Job: Product Designer at Acme Corp"
+            aria-label="View Job: Front-End Developer at BetaSoft"
             tabIndex="0"
             type="button"
           >
