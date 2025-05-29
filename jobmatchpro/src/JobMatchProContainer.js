@@ -87,7 +87,14 @@ function ProfileMatching() {
             <span className="jmp-tag">Figma</span>
             <span className="jmp-tag">Sketch</span>
           </div>
-          <button className="jmp-cta-primary">View Job</button>
+          <button
+            className="jmp-cta-primary"
+            aria-label="View Job: Product Designer at Acme Corp"
+            tabIndex="0"
+            type="button"
+          >
+            View Job
+          </button>
         </div>
         <div className="jmp-card match">
           <h3>Front-End Developer</h3>
@@ -100,7 +107,14 @@ function ProfileMatching() {
             <span className="jmp-tag">JS</span>
             <span className="jmp-tag">CSS</span>
           </div>
-          <button className="jmp-cta-primary">View Job</button>
+          <button
+            className="jmp-cta-primary"
+            aria-label="View Job: Product Designer at Acme Corp"
+            tabIndex="0"
+            type="button"
+          >
+            View Job
+          </button>
         </div>
       </div>
       <button className="jmp-cta-tertiary">See All Matching Jobs</button>
